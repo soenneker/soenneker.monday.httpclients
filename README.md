@@ -10,3 +10,9 @@
 ```
 dotnet add package Soenneker.Monday.HttpClients
 ```
+
+The parameterless `Get()` uses `Monday:ApiKey` and `Monday:ClientBaseUrl`. Pass connection values explicitly to work with multiple Monday accounts or endpoints:
+
+```csharp
+HttpClient tenantClient = await mondayGraphQlHttpClient.Get(tenantApiKey, tenantBaseUrl);
+```

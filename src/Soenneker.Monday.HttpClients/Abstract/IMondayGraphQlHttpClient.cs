@@ -11,4 +11,10 @@ namespace Soenneker.Monday.HttpClients.Abstract;
 public interface IMondayGraphQlHttpClient: IDisposable, IAsyncDisposable
 {
     ValueTask<HttpClient> Get(CancellationToken cancellationToken = default);
+
+    /// <summary>Gets a client for a specific API key using the configured base URL.</summary>
+    ValueTask<HttpClient> Get(string apiKey, CancellationToken cancellationToken = default);
+
+    /// <summary>Gets a client for a specific Monday connection.</summary>
+    ValueTask<HttpClient> Get(string apiKey, string baseUrl, CancellationToken cancellationToken = default);
 }
