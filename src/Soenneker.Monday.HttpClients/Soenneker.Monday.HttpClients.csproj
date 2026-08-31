@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Description>A thread-safe singleton HttpClient for Monday's GraphQL integration.</Description>
+        <Description>Provides cached, authenticated HTTP clients for Monday's GraphQL API.</Description>
         <Version Condition="'$(BUILD_VERSION)' == ''">4.0.0</Version>
         <Version Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</Version>
         <AssemblyName>Soenneker.Monday.HttpClients</AssemblyName>

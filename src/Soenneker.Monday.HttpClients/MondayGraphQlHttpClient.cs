@@ -13,7 +13,6 @@ using Soenneker.Utils.HttpClientCache.Abstract;
 
 namespace Soenneker.Monday.HttpClients;
 
-/// <inheritdoc cref="IMondayGraphQlHttpClient"/>
 public sealed class MondayGraphQlHttpClient : IMondayGraphQlHttpClient
 {
     private readonly IHttpClientCache _httpClientCache;
@@ -21,6 +20,7 @@ public sealed class MondayGraphQlHttpClient : IMondayGraphQlHttpClient
     private readonly string _baseUrl;
     private readonly string _authHeaderName;
     private readonly string _authHeaderValueTemplate;
+    private readonly string _providerId = Guid.NewGuid().ToString("N");
     private readonly ConcurrentDictionary<string, byte> _clientIds = new();
 
     private const string _prodBaseUrl = "https://api.monday.com/v2";
@@ -31,7 +31,7 @@ public sealed class MondayGraphQlHttpClient : IMondayGraphQlHttpClient
         _configuration = config;
         _baseUrl = config["Monday:ClientBaseUrl"] ?? _prodBaseUrl;
         _authHeaderName = config["Monday:AuthHeaderName"] ?? "Authorization";
-        _authHeaderValueTemplate = config["Monday:AuthHeaderValueTemplate"] ?? "Bearer {token}";
+        _authHeaderValueTemplate = config["Monday:AuthHeaderValueTemplate"] ?? "{token}";
     }
 
     public ValueTask<HttpClient> Get(CancellationToken cancellationToken = default)
@@ -71,7 +71,7 @@ public sealed class MondayGraphQlHttpClient : IMondayGraphQlHttpClient
 
     private string GetClientId(string apiKey, Uri baseUri)
     {
-        string value = string.Concat(apiKey, "\0", baseUri, "\0", _authHeaderName, "\0", _authHeaderValueTemplate);
+        string value = string.Concat(_providerId, "\0", apiKey, "\0", baseUri, "\0", _authHeaderName, "\0", _authHeaderValueTemplate);
 
         return $"{nameof(MondayGraphQlHttpClient)}:{XxHash3Util.Hash(value)}";
     }

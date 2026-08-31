@@ -6,12 +6,12 @@ using System.Threading;
 namespace Soenneker.Monday.HttpClients.Abstract;
 
 /// <summary>
-/// A .NET thread-safe singleton HttpClient for 
+/// Provides cached, authenticated HTTP clients for Monday's GraphQL API.
 /// </summary>
-public interface IMondayGraphQlHttpClient: IDisposable, IAsyncDisposable
+public interface IMondayGraphQlHttpClient : IDisposable, IAsyncDisposable
 {
     /// <summary>
-    /// Returns the configured HTTP client used by the Monday Graph Ql HTTP Client.
+    /// Gets a client using the configured API key and base URL.
     /// </summary>
     /// <param name="cancellationToken">Token used to cancel the operation.</param>
     /// <returns>A task whose result is the requested HTTP client.</returns>
@@ -29,7 +29,7 @@ public interface IMondayGraphQlHttpClient: IDisposable, IAsyncDisposable
     /// Gets a client for a specific Monday connection.
     /// </summary>
     /// <param name="apiKey">API key used to authenticate the request.</param>
-    /// <param name="baseUrl">URL of the base to target.</param>
+    /// <param name="baseUrl">Absolute Monday GraphQL endpoint to target.</param>
     /// <param name="cancellationToken">Token used to cancel the operation.</param>
     /// <returns>A task whose result is the requested HTTP client.</returns>
     ValueTask<HttpClient> Get(string apiKey, string baseUrl, CancellationToken cancellationToken = default);
