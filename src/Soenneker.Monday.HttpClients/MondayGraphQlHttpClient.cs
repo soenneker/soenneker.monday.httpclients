@@ -13,6 +13,7 @@ using Soenneker.Utils.HttpClientCache.Abstract;
 
 namespace Soenneker.Monday.HttpClients;
 
+/// <inheritdoc cref="IMondayGraphQlHttpClient" />
 public sealed class MondayGraphQlHttpClient : IMondayGraphQlHttpClient
 {
     private readonly IHttpClientCache _httpClientCache;
